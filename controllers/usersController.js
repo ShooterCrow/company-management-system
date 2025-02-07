@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Note = require("../models/Note");
+const Task = require("../models/Task");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 
@@ -102,22 +102,27 @@ const deleteUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "User ID required" });
   }
 
-  const notes = await Note.findOne({ user: id }).lean().exec();
-  if (notes?.length) {
-    return res.status(400).json({message: "User has assigned notes"})
+  const tasks = await Task.findOne({ user: id }).lean().exec();
+  if (tasks) {
+    return res.status(400).json({ message: "User has assigned tasks" });
   }
 
-  const user = await User.findById(id).exec()
+  const user = await User.findById(id).exec();
 
   if (!user) {
-    return res.status(400).json({message: "User not found"})
+    return res.status(400).json({ message: "User not found" });
   }
 
-  const result = user.deleteOne()
+  const result = await user.deleteOne();
+  let reply;
 
-  const reply = `Username ${result.username} with ID ${result.id} deleted`
-
-  res.json(reply)
+  if (result) {
+    reply = `Username ${result} with ID ${user.id} deleted`;
+    return res.json(reply);
+  } else {
+    reply = `Failed to delete ${user.username} ${console.table(result)}`;
+    return res.json(reply);
+  }
 });
 
 module.exports = { getAllUsers, createnewUser, updateUser, deleteUser };

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+* {
+    box-sizing: border-box;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.icon-button {
+    display: flex;
+    padding: 7px 15px;
+    border-radius: 5px;
+}
+
+.icon-button:disabled {
+    background-color: rgb(182, 182, 182);
+    color: rgb(232, 232, 232);
+}
+
+.form-input {
+    padding: 5px 8px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
