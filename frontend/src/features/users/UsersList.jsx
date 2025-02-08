@@ -9,7 +9,11 @@ const UsersList = () => {
     isSuccess,
     isError,
     error
-  } = useGetUsersQuery()
+  } = useGetUsersQuery(null, {
+    pollingInterval: 60000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true
+  })
 
   let content
   let tableContent
@@ -24,7 +28,7 @@ const UsersList = () => {
 
     const { ids } = users
 
-    tableContent = ids?.length
+    content = ids?.length
       ? ids.map(userId => <User key={userId} userId={userId} />)
       : null
   }
@@ -35,7 +39,7 @@ const UsersList = () => {
         <div className="border-b border-gray-200 px-4 py-3">
           <h2 className="text-lg font-semibold text-gray-900">User Roles</h2>
         </div>
-        {tableContent}
+        {content}
       </div>
     </div>
   );

@@ -120,7 +120,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     reply = `Username ${result} with ID ${user.id} deleted`;
     return res.json(reply);
   } else {
-    reply = `Failed to delete ${user.username} ${console.table(result)}`;
+    reply = `Failed to delete ${user.username}`;
     return res.json(reply);
   }
 });

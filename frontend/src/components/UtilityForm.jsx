@@ -1,4 +1,5 @@
 import { Save, Trash } from "lucide-react"
+import ErrorComponent from "./ErrorComponent"
 
 const UtilityForm = ({ title,
     username,
@@ -21,30 +22,21 @@ const UtilityForm = ({ title,
     roles = roles ?? null
 }) => {
 
-    let errorEl
-    const errorClass = (isUpdateError || isDelError) ? "bg-red-500 px-10 py-5" : "offscreen"
+    const errorClass = (isUpdateError || isDelError) ? true : false
     const validUserClass = !validUsername ? "form-input-incomplete" : ""
     const validPwdClass = password && !validPassword ? "form-input-incomplete" : ""
     const validRolesClass = !Boolean(roles.length) ? "form-input-incomplete" : ""
     let errorContent
     if (delError?.data?.message || updateError?.data?.message) {
-        errorContent = (delError?.data?.message || updateError?.data?.message) ?? "d"
+        errorContent = (delError?.data?.message || updateError?.data?.message) ?? ""
     }
-    if (errorClass && (delError?.data?.message || updateError?.data?.message)) {
-        errorEl = document.querySelector(".errormsg")
-        setTimeout(() => {
-            errorEl.classList.add("hidden")
-        }, 5000)
-        document.onclick = () => {
-            if (errorEl.classList.contains("bg-red-500")) {
-                errorEl.classList.add("hidden")
-            }
-        }
-    }
+    
 
     return (
         <div className="flex justify-center items-center h-100">
-            <p className={`${errorClass} errormsg absolute`}>{errorContent}</p>
+            <ErrorComponent
+                errorClass={errorClass}
+                errorContent={errorContent} />
             <form className="w-1/2 flex flex-col justify-center">
                 <div className="flex justify-between">
                     <h2>{title}</h2>

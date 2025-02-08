@@ -8,12 +8,16 @@ const TasksList = () => {
     isSuccess,
     isError,
     error
-  } = useGetTasksQuery()
+  } = useGetTasksQuery(undefined, {
+    pollingInterval: 30000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true
+  })
   let tableContent 
 
   
   if (isSuccess) {
-    console.log(tasks.entities["key", Object.entries(tasks)])
+    // console.log(tasks.entities["key", Object.entries(tasks)])
     let { ids } = tasks
 
     return (

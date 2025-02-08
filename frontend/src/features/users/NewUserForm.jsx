@@ -51,7 +51,7 @@ const NewUserForm = () => {
   //Same as making an if statement to check if the values are boolean and is not loading
   const canSave = [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
   const handleUserSave = async (e) => {
-    e.preventDefault
+    e.preventDefault()
     if (canSave) {
       await addNewUser({ username, password, roles })
     }

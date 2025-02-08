@@ -12,6 +12,7 @@ import EditUser from './features/users/EditUser'
 import NewTask from './features/tasks/NewTask'
 import EditTask from './features/tasks/EditTask'
 import Prefetch from './features/auth/Prefetch'
+import NewTaskForm from './features/tasks/NewTaskForm'
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
               </Route>
               <Route path='tasks'>
                 <Route index element={<TaskList />} />
-                <Route path='create' element={<NewTask />} />
+                <Route path='create' element={<NewTaskForm />} />
                 <Route path=':id' element={<EditTask />} />
               </Route>
 
