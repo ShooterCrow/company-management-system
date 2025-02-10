@@ -10,13 +10,16 @@
 
 .icon-button {
     display: flex;
+    justify-content: center;
     padding: 7px 15px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .icon-button:disabled {
     background-color: rgb(182, 182, 182);
     color: rgb(232, 232, 232);
+    cursor: default;
 }
 
 .form-input {

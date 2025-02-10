@@ -18,7 +18,7 @@ const Task = ({ taskId }) => {
                 <div className="divide-y w-full flex justify-center divide-gray-200">
                     <div className="flex gap-5 border-b py-2 w-full justify-between items-center px-5 py-4">
                         <div className="font-bold text-left">
-                            {task.user}
+                            {task.username}
                         </div>
                         <div className="font-medium w-1/10">
                             {task.title}

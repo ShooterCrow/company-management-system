@@ -75,7 +75,6 @@ const NewTaskForm = () => {
     const newUser = await addNewTask({ user: userId, title, text: desc })
     newUser?.error ? setErrorClass(true) : setErrorClass(false)
     setErrorContent(newUser?.error?.data?.message)
-    console.log(errorContent, errorClass)
   }
 
   let content
@@ -94,7 +93,7 @@ const NewTaskForm = () => {
             <select
               name="userSelect"
               id="userSelect"
-              className="border border-gray-500"
+              className="border border-gray-300 py-2 px-4 my-2"
               onChange={handleSelctUser}
               onBlur={handleSelctUser}>
               <option className="text-gray-500">Select one option</option>
@@ -107,7 +106,7 @@ const NewTaskForm = () => {
               type="text"
               id="taskTitle"
               name="title"
-              className="border border-gray-500"
+              className="border border-gray-300 py-2 px-4 my-2"  
               placeholder="Enter Task Title"
               onChange={handleTitleChange} />
             <label htmlFor="taskDesc" className="form-label">
@@ -116,10 +115,10 @@ const NewTaskForm = () => {
             <textarea
               name="text"
               onBlur={handleDescChange}
-              className="border border-gray-500"
+              className="border border-gray-300 py-2 px-4 my-2"
               id="taskDesc" />
             <button
-              className="px-4 py-2 bg-green-500 rounded mt-2"
+              className="icon-button gap-2 bg-green-500 rounded mt-2"
               onClick={handleTaskSubmit}>
               Submit
             </button>

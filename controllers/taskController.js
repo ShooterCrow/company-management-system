@@ -16,7 +16,7 @@ const getAllTasks = asyncHandler(async (req, res) => {
     let userId = task.user
     const user = await User.findById(userId).lean().exec()
     const username = user?.username
-    return ({...task, user: username}) //{...task, ...user}
+    return ({...task, username: username}) //{...task, ...user}
   }));
 
   res.json(tasksWithUsername)
@@ -79,11 +79,11 @@ const updateTask = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Task not found" });
   }
 
-  const duplicate = await Task.findOne({title}).lean().exec()
+  // const duplicate = await Task.findOne({title}).lean().exec()
 
-  if (duplicate) {
-    return res.status(409).json({message: "Duplicate title"})
-  }
+  // if (duplicate) {
+  //   return res.status(409).json({message: "Duplicate title"})
+  // }
 
   task.user = user
   task.title = title;
@@ -103,7 +103,7 @@ const updateTask = asyncHandler(async (req, res) => {
 const deleteTask = asyncHandler(async (req, res) => {
   const { id } = req.body;
   if (!id) {
-    return res.status(400).json({ message: "Task does not exist" });
+    return res.status(400).json({ message: "Task ID is required" });
   }
   const task = await Task.findById(id).exec();
 
@@ -116,12 +116,12 @@ const deleteTask = asyncHandler(async (req, res) => {
   res.json(reply);
 });
 
-const deleteAllTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find();
-  if (tasks?.length) {
-    await Task.deleteMany({})
-    return res.status(200).json({message: tasks})
-  } else res.status(400).json({message: `Failed, No of tasks availale: ${tasks?.length}`})
-})
+// const deleteAllTasks = asyncHandler(async (req, res) => {
+//   const tasks = await Task.find();
+//   if (tasks?.length) {
+//     await Task.deleteMany({})
+//     return res.status(200).json({message: tasks})
+//   } else res.status(400).json({message: `Failed, No of tasks availale: ${tasks?.length}`})
+// })
 
-module.exports = { getAllTasks, createTask, updateTask, deleteTask, deleteAllTasks };
+module.exports = { getAllTasks, createTask, updateTask, deleteTask };

@@ -26,11 +26,8 @@ const UtilityForm = ({ title,
     const validUserClass = !validUsername ? "form-input-incomplete" : ""
     const validPwdClass = password && !validPassword ? "form-input-incomplete" : ""
     const validRolesClass = !Boolean(roles.length) ? "form-input-incomplete" : ""
-    let errorContent
-    if (delError?.data?.message || updateError?.data?.message) {
-        errorContent = (delError?.data?.message || updateError?.data?.message) ?? ""
-    }
     
+    let errorContent = delError || updateError ? (delError?.data?.message || updateError?.data?.message) : ""
 
     return (
         <div className="flex justify-center items-center h-100">
