@@ -79,7 +79,7 @@ const NewTaskForm = () => {
 
   let content
   if (isLoading) content = <p>Loading...</p>
-  if (isError) content = <p className={errorClass}>{error?.data?.message}</p>
+  if (isError) content = <p className={errorClass || ""}>{error?.data?.message}</p>
   if (isSuccess) {
     content = <>
       <div className="flex flex-col justify-center items-center ">

@@ -101,11 +101,15 @@ const updateTask = asyncHandler(async (req, res) => {
 // @route DELETE / tasks
 // @access private
 const deleteTask = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const { id, user } = req.body;
   if (!id) {
-    return res.status(400).json({ message: "Task ID is required" });
+    return res.status(400).json({ message: "Task not found" });
   }
   const task = await Task.findById(id).exec();
+
+  const userFound = await User.findById({id: user}).lean().exec()
+
+  if (!userFound.roles.includes("Manager") || !userFound.roles.includes("Admin")) return res.status("401").json({message: "Unauthorized"})
 
   const deletedTask = await task.deleteOne();
 
