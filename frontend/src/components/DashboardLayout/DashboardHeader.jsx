@@ -1,7 +1,39 @@
-import { Link } from "react-router-dom"
-import { Menu } from 'lucide-react';
+import { Link, useNavigate, useLocation } from "react-router-dom"
+import { useEffect } from "react";
+import { LogOutIcon, Menu, } from 'lucide-react';
+
+import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
+
+const DASH_REGEX = /^\/dash(\/)?$/
+const USERS_REGEX = /^\/dash\/users(\/)?$/
+const TASKS_REGEX = /^\/dash\/tasks(\/)?$/
 
 const DashboardHeader = () => {
+    const navigate = useNavigate()
+    const { pathname } = useLocation()
+
+    const [sendLogout, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useSendLogoutMutation()
+
+    useEffect(() => {
+        if (isSuccess) {
+            navigate("/")
+        }
+    }, [isSuccess, navigate])
+
+    if (isLoading) return <p>Logging Out...</p>
+
+    if (isError) return <p>Error: {error?.data?.message}</p>
+
+    let dashClass = null
+    if(!DASH_REGEX.test(pathname) && !USERS_REGEX.test(pathname) && TASKS_REGEX.test(pathname)) {
+        dashClass = ""
+    }
+
     return (
         <header>
             <nav className="bg-white mb-10 shadow-sm">
@@ -28,6 +60,10 @@ const DashboardHeader = () => {
                             </Link>
                         </div>
 
+                        <div onClick={sendLogout} className="flex gap-2 cursor-pointer">
+                            <p className="hidden md:block ">Logout</p>
+                            <LogOutIcon />
+                        </div>
                         {/* Mobile menu button */}
                         <div className="md:hidden">
                             <button className="p-2 rounded-md text-gray-700 hover:text-blue-600 focus:outline-none">

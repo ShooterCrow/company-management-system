@@ -8,7 +8,7 @@ const TasksList = () => {
     isSuccess,
     isError,
     error
-  } = useGetTasksQuery(undefined, {
+  } = useGetTasksQuery("TasksList", {
     pollingInterval: 30000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true

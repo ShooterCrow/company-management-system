@@ -6,22 +6,24 @@ import { Outlet } from "react-router-dom";
 
 const Prefetch = () => {
   useEffect(() => {
-    console.log("subsribing...");
+    console.log("Subscribing...");
+    
     const tasks = store.dispatch(tasksApiSlice.endpoints.getTasks.initiate());
     const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate());
+
     return () => {
       console.log("Unsubscribing");
-      tasks.unsubscribe();
-      users.unsubscribe();
+      
+      if (tasks && typeof tasks.unsubscribe === "function") {
+        tasks.unsubscribe();
+      }
+      if (users && typeof users.unsubscribe === "function") {
+        users.unsubscribe();
+      }
     };
   }, []);
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
-  
+  return <Outlet />;
 };
 
 export default Prefetch;

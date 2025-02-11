@@ -109,7 +109,7 @@ const deleteTask = asyncHandler(async (req, res) => {
 
   const userFound = await User.findById({id: user}).lean().exec()
 
-  if (!userFound.roles.includes("Manager") || !userFound.roles.includes("Admin")) return res.status("401").json({message: "Unauthorized"})
+  if (!userFound.roles.includes("Manager") || !userFound.roles.includes("Admin")) return res.status("301").json({message: "Unauthorized"})
 
   const deletedTask = await task.deleteOne();
 

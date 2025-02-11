@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const ErrorComponent = ({ errorClass, errorContent }) => {
+const ErrorComponent = ({ errorClass, errorContent, el }) => {
     const [visible, setVisible] = useState(!!errorContent)
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const ErrorComponent = ({ errorClass, errorContent }) => {
 
     return (
         <>
-            <p className={`${errorClass ? "errormsg absolute bg-red-500 px-10 py-5" : "hidden errormsg"}`}>{errorContent}</p>
+            <p ref={el} aria-live='assertive' className={`${errorClass ? "errormsg absolute bg-red-500 px-10 py-5" : "hidden errormsg"}`}>{errorContent}</p>
         </>
     )
 }
