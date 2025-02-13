@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InputComponent = ({ labelText, type, id, name, ph, value, autocomplete, onchange, classes }) => {
+const InputComponent = ({ labelText, type, id, name, ph, value, autocomplete, onchange, classes, ref }) => {
     return (
         <>
             <label className="form-label" htmlFor={id}>
@@ -9,6 +9,7 @@ const InputComponent = ({ labelText, type, id, name, ph, value, autocomplete, on
             <input
                 type={type}
                 id={id}
+                ref={ref}
                 name={name}
                 placeholder={ph}
                 value={value}

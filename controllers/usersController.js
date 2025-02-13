@@ -7,7 +7,11 @@ const asyncHandler = require("express-async-handler");
 // @route GET / users
 // @access private
 const getAllUsers = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+
   const users = await User.find().select("-password").lean();
+  // const user = await User.findById(id).lean().exec()
+
   if (!users?.length) {
     return res.status(400).json({ message: "No Users Found" });
   }

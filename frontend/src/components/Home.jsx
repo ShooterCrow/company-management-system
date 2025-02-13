@@ -1,8 +1,11 @@
 import React from 'react';
 import { ArrowRight, Star, Users, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const Home = () => {
+    const { username, roles } = useAuth()
+    console.log(username)
     return (
         <section className="home min-h-screen bg-gradient-to-b from-gray-50 to-white">
             {/* Hero Section */}
@@ -18,11 +21,18 @@ const Home = () => {
                             Start your journey today and join thousands of satisfied customers.
                         </p>
                         <div className="flex justify-center gap-4">
-                            <Link to={"/login"}>
-                                <button className="bg-blue-600 cursor-pointer text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-blue-700 transition-colors">
-                                    Login <ArrowRight className="w-4 h-4" />
-                                </button>
-                            </Link>
+                            {username ?
+                                <Link to={`/dash`}>
+                                    <button className="bg-blue-600 cursor-pointer text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-blue-700 transition-colors">
+                                        Dashboard <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                </Link> :
+                                <Link to={`/login`}>
+                                    <button className="bg-blue-600 cursor-pointer text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-blue-700 transition-colors">
+                                        Login <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                </Link>
+                            }
                             <button className="border cursor-pointer border-gray-300 px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
                                 Learn More
                             </button>
@@ -66,11 +76,18 @@ const Home = () => {
                     <div className="text-center">
                         <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>
                         <p className="text-xl text-blue-100 mb-8">Join thousands of users who trust our platform.</p>
-                        <Link to={"login"}>
-                            <button className="bg-white cursor-pointer text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                                Login Now
-                            </button>
-                        </Link>
+                        {username ?
+                            <Link to={"/dash"}>
+                                <button className="bg-white cursor-pointer text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                                    Dashboard
+                                </button>
+                            </Link> :
+                            <Link to={"login"}>
+                                <button className="bg-white cursor-pointer text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                                    Login Now
+                                </button>
+                            </Link>
+                        }
                     </div>
                 </div>
             </div>
