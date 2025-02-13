@@ -22,8 +22,7 @@ const Welcome = () => {
                         <Link to={"/dash/users/create"}>
                             <button className='outline-none cursor-pointer bg-green-300 px-4 py-1 my-2 shadow rounded'>Create New User</button>
                         </Link>
-                        : null
-                    }
+                        : null}
                 </div>
             </section>
         </>

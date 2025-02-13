@@ -1,80 +1,80 @@
-import { useEffect, useState } from 'react'
-import InputComponent from '../../components/InputComponent'
-import { Save, Trash } from 'lucide-react'
-import { useUpdateTaskMutation } from './tasksApiSlice'
-import { useDeleteTaskMutation } from './tasksApiSlice'
-import { useNavigate } from 'react-router-dom'
-import useAuth from '../../hooks/useAuth'
+import { useState, useEffect } from "react"
+import { useUpdateTaskMutation, useDeleteTaskMutation } from "./tasksApiSlice"
+import { useNavigate } from "react-router-dom"
+import InputComponent from "../../components/InputComponent"
+import { Save, Trash } from "lucide-react"
+import useAuth from "../../hooks/useAuth"
 
 const EditTaskForm = ({ task, users }) => {
+
   const {isAdmin, isManager} = useAuth()
+
   const [updateTask, {
-    isLoading: isUpdateTaskLoading,
-    isSuccess: isUpdateTaskSuccess,
-    isError: isUpdateTaskError,
-    error: updateError
+    isLoading,
+    isSuccess,
+    isError,
+    error
   }] = useUpdateTaskMutation()
 
   const [deleteTask, {
-    isLoading: isDeleteTaskLoading,
-    isSuccess,
-    isError: isDeleteTaskError,
-    error: deleteTaskError
+    isSuccess: isDelSuccess,
+    isError: isDelError,
+    error: delerror
   }] = useDeleteTaskMutation()
-
-  const [userId, setUserId] = useState(task.user)
-  const [title, setTitle] = useState(task.title)
-  const [text, setText] = useState(task.text)
-  const [completed, setCompleted] = useState(task.completed)
 
   const navigate = useNavigate()
 
+  const [title, setTitle] = useState(task.title)
+  const [text, setText] = useState(task.text)
+  const [completed, setCompleted] = useState(task.completed)
+  const [userId, setUserId] = useState(task.user)
+
   useEffect(() => {
-    if (isUpdateTaskSuccess || isSuccess) {
-      setUserId("")
-      setTitle("")
-      setText("")
-      setCompleted("")
-      navigate("/dash/tasks")
+
+    if (isSuccess || isDelSuccess) {
+      setTitle('')
+      setText('')
+      setUserId('')
+      navigate('/dash/tasks')
     }
-  }, [isUpdateTaskSuccess, isSuccess, navigate])
 
-  useEffect(() => {
-    console.log(completed)
-  }, [completed])
+  }, [isSuccess, isDelSuccess, navigate])
 
-  let canSave = [task.user !== userId, task.title !== title, task.text !== text, task.completed !== completed].some(Boolean)
+  const handleTitleChange = e => setTitle(e.target.value)
+  const handleDescChange = e => setText(e.target.value)
+  const handleCompleted = e => setCompleted(prev => !prev)
+  const handleUserChange = e => setUserId(e.target.value)
 
-  const handleTitleChange = (e) => setTitle(e.target.value)
+  const canSave = [title, text, userId].every(Boolean) && !isLoading
 
-  const handleDescChange = (e) => setText(e.target.value)
-
-  const handleUserChange = (e) => setUserId(e.target.value)
-
-  const handleCompleted = () => setCompleted(prev => !prev)
-
+  const handleTaskSave = async (e) => {
+    if (canSave) {
+      await updateTask({ id: task.id, user: userId, title, text, completed })
+    }
+  }
 
   const handleTaskDelete = async () => {
     await deleteTask({ id: task.id })
   }
 
-  const handleTaskSave = async () => {
-    await updateTask({ id: task.id, user: userId, title, text, completed })
-  }
+  const created = new Date(task.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+  const updated = new Date(task.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
 
-  let listOfUsers
-  if (users) {
-    listOfUsers = users.map(user => {
-      return (
-        <option
-          value={user._id}
-          key={user._id}>
-          {user.username}
-        </option>
-      )
-    })
+  const options = users.map(user => {
+    return (
+      <option
+        key={user.id}
+        value={user.id}
 
-  }
+      > {user.username}</option >
+    )
+  })
+
+  const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
+  const validTitleClass = !title ? "form__input--incomplete" : ''
+  const validTextClass = !text ? "form__input--incomplete" : ''
+
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? ''
 
   return (
     <div className='flex justify-center'>
@@ -110,7 +110,7 @@ const EditTaskForm = ({ task, users }) => {
               className={`border overflow-hidden py-2 outline-none form-select`}
               onChange={handleUserChange}
               id="roles">
-              {listOfUsers}
+              {options}
             </select>
           </div>
           <div className='flex-1 gap-2 flex justify-end'>

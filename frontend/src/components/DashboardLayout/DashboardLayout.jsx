@@ -20,16 +20,6 @@ const DashboardLayout = () => {
         hidden === "hidden" && setHidden("block")
         hidden === "block" && setHidden("hidden")
     }
-    // useEffect(() => {
-    //     const handleShow = () => setHidden("hidden")
-    //     if (hidden === "block") {
-    //         // console.log(11)
-    //         document.addEventListener("click", handleShow)
-    //     }
-    //     return () =>{
-    //         document.removeEventListener("click", handleShow)
-    //     }
-    // }, [hidden])
 
     return (
         <div>

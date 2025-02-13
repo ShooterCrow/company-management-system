@@ -7,20 +7,21 @@ import { Outlet } from "react-router-dom";
 const Prefetch = () => {
   useEffect(() => {
     console.log("Subscribing...");
-    
-    const tasks = store.dispatch(tasksApiSlice.endpoints.getTasks.initiate());
-    const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate());
 
-    return () => {
-      console.log("Unsubscribing");
-      
-      if (tasks && typeof tasks.unsubscribe === "function") {
-        tasks.unsubscribe();
-      }
-      if (users && typeof users.unsubscribe === "function") {
-        users.unsubscribe();
-      }
-    };
+    store.dispatch(tasksApiSlice.util.prefetch("getTasks", "tasksList", {force: true}))
+    store.dispatch(usersApiSlice.util.prefetch("getUsers", "usersList", {force: true}))
+    
+    // const tasks = store.dispatch(tasksApiSlice.endpoints.getTasks.initiate());
+    // const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate());
+    // return () => {
+    //   console.log("Unsubscribing");
+    //   if (tasks && typeof tasks.unsubscribe === "function") {
+    //     tasks.unsubscribe();
+    //   }
+    //   if (users && typeof users.unsubscribe === "function") {
+    //     users.unsubscribe();
+    //   }
+    // };
   }, []);
 
   return <Outlet />;

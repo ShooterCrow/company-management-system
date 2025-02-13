@@ -11,10 +11,12 @@ const initialState = tasksAdapter.getInitialState();
 export const tasksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTasks: builder.query({
-      query: () => "/tasks",
-      validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError;
-      },
+      query: () => ({
+        url: "/tasks",
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError;
+        },
+      }),      
       transformResponse: (responseData) => {
         const loadedTasks = responseData.map((task) => {
           task.id = task._id;

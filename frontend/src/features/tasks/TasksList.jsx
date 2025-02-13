@@ -1,6 +1,7 @@
 import Task from "./Task"
 import { useGetTasksQuery } from "./tasksApiSlice"
 import useAuth from "../../hooks/useAuth"
+import PulseLoader from "react-spinners/PulseLoader"
 
 const TasksList = () => {
   const {username, isAdmin, isManager}=useAuth()
@@ -42,7 +43,7 @@ const TasksList = () => {
 
   return (
     <>
-      {isLoading && "Loading..."}
+      {isLoading && <div className="flex justify-center"><PulseLoader /></div>}
       {isError && error?.data?.message}
       {isSuccess && tableContent}
     </>

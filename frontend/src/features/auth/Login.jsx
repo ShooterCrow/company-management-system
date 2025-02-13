@@ -7,6 +7,7 @@ import usePersist from "../../hooks/usePersist"
 
 import ErrorComponent from "../../components/ErrorComponent"
 import InputComponent from "../../components/InputComponent"
+import PulseLoader from "react-spinners/PulseLoader"
 
 const Login = () => {
   const userRef = useRef()
@@ -31,7 +32,11 @@ const Login = () => {
 
   const errorClass = errorMsg ? true : false
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return (
+    <div className="flex justify-center items-center h-screen">
+      <PulseLoader />
+    </div>
+  )
 
   const handleUserInput = (e) => setUsername(e.target.value)
   const handlePasswordInput = (e) => setPassword(e.target.value)

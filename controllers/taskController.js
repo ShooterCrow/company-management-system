@@ -48,7 +48,7 @@ const createTask = asyncHandler(async (req, res) => {
     text,
   };
 
-  const duplicate = await Task.findOne({title}).lean().exec();
+  const duplicate = await Task.findOne({title}).collation({locale: "en", strength: 2}).lean().exec();
 
   if (duplicate) {
     return res.status(401).json({message: "Task already exists"})

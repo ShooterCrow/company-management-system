@@ -2,8 +2,10 @@ import { useGetUsersQuery } from "../users/usersApiSlice"
 import { useAddNewTaskMutation } from "./tasksApiSlice"
 import NewTask from "./NewTask"
 import { useEffect, useState } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import ErrorComponent from "../../components/ErrorComponent"
+import PulseLoader from "react-spinners/PulseLoader"
+
 
 const NewTaskForm = () => {
   const {
@@ -78,7 +80,7 @@ const NewTaskForm = () => {
   }
 
   let content
-  if (isLoading) content = <p>Loading...</p>
+  if (isLoading) content = <PulseLoader color="#fff" />
   if (isError) content = <p className={errorClass || ""}>{error?.data?.message}</p>
   if (isSuccess) {
     content = <>

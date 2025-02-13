@@ -1,11 +1,15 @@
-import { useSelector } from "react-redux";
-import { selectTaskById } from "./tasksApiSlice"
 import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
+import { useGetTasksQuery } from "./tasksApiSlice";
+import { memo } from "react";
 
 
 const Task = ({ taskId }) => {
-    const task = useSelector(state => selectTaskById(state, taskId))
+    const { task } = useGetTasksQuery("tasksList", {
+        selectFromResult: ({ data }) => ({
+            task: data?.entities[taskId]
+        })
+    })
     const navigate = useNavigate()
 
     if (task) {
@@ -44,4 +48,6 @@ const Task = ({ taskId }) => {
     } else return null
 }
 
-export default Task
+const memoizedTask = memo(Task)
+
+export default memoizedTask
