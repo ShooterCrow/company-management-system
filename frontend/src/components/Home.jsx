@@ -12,12 +12,11 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
                     <div className="text-center">
                         <h1 className="text-5xl font-bold text-gray-900 mb-6">
-                            Welcome to Our Platform
+                            Company Management System
                             <span className="text-blue-600">.</span>
                         </h1>
                         <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                            Build something amazing with our cutting-edge tools and solutions.
-                            Start your journey today and join thousands of satisfied customers.
+                            Running efficiently, assign tasks to workers, and deliver to customers.
                         </p>
                         <div className="flex justify-center gap-4">
                             {username ?

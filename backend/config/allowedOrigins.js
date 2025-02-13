@@ -1,7 +1,6 @@
 const allowedOrigins = [
     // "*",
-    "http://localhost:5173",
-    "https://javascriptjunkie.com"
+    "https://company-management-system-03fp.onrender.com/",
 ]
 
 module.exports = allowedOrigins
