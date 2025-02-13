@@ -5,7 +5,10 @@ import App from './App.jsx'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { store } from "./app/store"
 import { Provider } from 'react-redux'
+import { disableReactDevTools } from "@disable-react-devtools"
 
+if (process.env.NODE_ENV === "production") disableReactDevTools()
+  
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
