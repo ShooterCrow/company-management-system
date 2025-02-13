@@ -3,9 +3,11 @@ import InputComponent from '../../components/InputComponent'
 import { Save, Trash } from 'lucide-react'
 import { useUpdateTaskMutation } from './tasksApiSlice'
 import { useDeleteTaskMutation } from './tasksApiSlice'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const EditTaskForm = ({ task, users }) => {
+  const {isAdmin, isManager} = useAuth()
   const [updateTask, {
     isLoading: isUpdateTaskLoading,
     isSuccess: isUpdateTaskSuccess,
@@ -113,7 +115,7 @@ const EditTaskForm = ({ task, users }) => {
           </div>
           <div className='flex-1 gap-2 flex justify-end'>
             <label htmlFor="completed" className="form-label">
-              Completed Status: 
+              Completed Status:
             </label>
             <input type="checkbox" name="completed" id="completed" checked={completed} onChange={handleCompleted} />
           </div>
@@ -126,12 +128,14 @@ const EditTaskForm = ({ task, users }) => {
             onClick={handleTaskSave} >
             Save Changes <Save />
           </button>
-          <button
-            title="Delete"
-            className="icon-button gap-2 bg-red-500"
-            onClick={handleTaskDelete} >
-            Delete Task <Trash />
-          </button>
+          {isAdmin || isManager ?
+            (<button
+              title="Delete"
+              className="icon-button gap-2 bg-red-500"
+              onClick={handleTaskDelete} >
+              Delete Task <Trash />
+            </button>) : null
+          }
         </div>
       </form>
     </div>

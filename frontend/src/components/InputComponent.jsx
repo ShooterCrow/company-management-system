@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {forwardRef } from 'react'
 
-const InputComponent = ({ labelText, type, id, name, ph, value, autocomplete, onchange, classes, ref }) => {
+const InputComponent = forwardRef (({ labelText, type, id, name, ph, value, autocomplete, onchange, classes }, ref) => {
     return (
         <>
             <label className="form-label" htmlFor={id}>
@@ -18,6 +18,6 @@ const InputComponent = ({ labelText, type, id, name, ph, value, autocomplete, on
                 className={`my-2 ${classes} border border-gray-200 py-2 px-4`} />
         </>
     )
-}
+})
 
 export default InputComponent

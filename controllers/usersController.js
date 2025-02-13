@@ -29,7 +29,7 @@ const createnewUser = asyncHandler(async (req, res) => {
   }
 
   //Avoid Duplicate
-  const duplicate = await User.findOne({ username }).lean().exec();
+  const duplicate = await User.findOne({ username }).collation({locale: "en", strength: 2}).lean().exec();
 
   if (duplicate) {
     return res.status(409).json({ message: "Username Already Exists" });
@@ -79,7 +79,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   //Avoid duplicate
-  const duplicate = await User.findOne({ username }).lean().exec();
+  const duplicate = await User.findOne({ username }).collation({locale: "en", strength: 2}).lean().exec();
   if (duplicate && duplicate?._id.toString !== id) {
     return res.status(409).json({ message: "Duplicate username" });
   }
