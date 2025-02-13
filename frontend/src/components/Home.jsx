@@ -5,7 +5,6 @@ import useAuth from '../hooks/useAuth';
 
 const Home = () => {
     const { username, roles } = useAuth()
-    console.log(username)
     return (
         <section className="home min-h-screen bg-gradient-to-b from-gray-50 to-white">
             {/* Hero Section */}

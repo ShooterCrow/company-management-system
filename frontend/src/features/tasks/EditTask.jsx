@@ -7,7 +7,7 @@ import PulseLoader from 'react-spinners/PulseLoader'
 import useTitle from '../../hooks/useTitle'
 
 const EditTask = () => {
-    useTitle('Tasks: Edit Task')
+    useTitle('Edit Task')
 
     const { id } = useParams()
 
@@ -25,12 +25,12 @@ const EditTask = () => {
         }),
     })
 
-    if (!task || !users?.length) return <PulseLoader color={"#FFF"} />
+    if (!task || !users?.length) return <PulseLoader />
 
 
     if (!isManager && !isAdmin) {
         if (task.username !== username) {
-            return <p className="errmsg">No access</p>
+            return <p className="text-bold text-red-500">No access</p>
         }
     }
 

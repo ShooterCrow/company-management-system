@@ -2,8 +2,11 @@ import Task from "./Task"
 import { useGetTasksQuery } from "./tasksApiSlice"
 import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
+import useTitle from "../../hooks/useTitle"
 
 const TasksList = () => {
+  useTitle("View all Tasks")
+
   const {username, isAdmin, isManager}=useAuth()
   const {
     data: tasks,

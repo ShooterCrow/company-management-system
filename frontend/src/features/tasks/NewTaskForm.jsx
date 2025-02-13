@@ -5,9 +5,12 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ErrorComponent from "../../components/ErrorComponent"
 import PulseLoader from "react-spinners/PulseLoader"
+import useTitle from "../../hooks/useTitle"
 
 
 const NewTaskForm = () => {
+  useTitle("Create New Task")
+
   const {
     data: users,
     isLoading,

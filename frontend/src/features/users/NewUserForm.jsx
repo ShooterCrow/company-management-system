@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom"
 import { ROLES } from "../../config/roles"
 import { Save } from "lucide-react"
 import UtilityForm from "../../components/UtilityForm"
+import useTitle from "../../hooks/useTitle"
 
 const USER_REGEX = /^[A-z0-9]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
 
 const NewUserForm = () => {
+  useTitle("Create New User")
+
   const [addNewUser, {
     isLoading,
     isSuccess,
